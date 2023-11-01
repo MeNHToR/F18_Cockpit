@@ -336,7 +336,6 @@ void loop() {
     iffAntSelectSw = 1;
   }
 
-
   //GAIN Switch
   uint8_t gainSwitch_On = pcf8575_2.digitalRead(P8);                // GAIN Switch
 
@@ -378,11 +377,11 @@ void loop() {
   uint8_t fuelDumpSw_Off = pcf8575_2.digitalRead(P11);              // Fuel Dump Switch, OFF
 
   if (fuelDumpSw_Off == HIGH && fuelDumpSw != 1) {
-    sendDcsBiosMessage("varDCS","0");
+    sendDcsBiosMessage("FUEL_DUMP_SW","0");
     fuelDumpSw = 1;
   }
   else if (fuelDumpSw_Off!=HIGH && fuelDumpSw != 0) { 
-    sendDcsBiosMessage("varDCS","1");
+    sendDcsBiosMessage("FUEL_DUMP_SW","1");
     fuelDumpSw = 0;
   }
 
