@@ -9,20 +9,21 @@
 #include "PCF8575.h"
 
 // Set i2c address
-PCF8575 pcf8575(0x20);
+PCF8575 pcf8575(0x22);
 unsigned long timeElapsed;
 void setup()
 {
   Serial.begin(115200);
 
-  pcf8575.pinMode(P1, INPUT);
+  pcf8575.pinMode(P9, INPUT);
+  //pcf8575.pinMode(P8, INPUT);
 
   pcf8575.begin();
 }
 
 void loop()
 {
-  uint8_t val = pcf8575.digitalRead(P1);
+  uint8_t val = pcf8575.digitalRead(P9);
   if (val==HIGH) Serial.println("KEY PRESSED");
-  delay(50);
+  delay(1000);
 }

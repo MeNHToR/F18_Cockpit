@@ -263,11 +263,11 @@ void loop() {
   uint8_t probeSw_EmergExtd = pcf8575_2.digitalRead(P0);            // Probe Control Switch, EMERG EXTD
   uint8_t probeSw_Extend = pcf8575_2.digitalRead(P1);               // Probe Control Switch, EXTEND
 
-  if (probeSw_Extend == HIGH && probeSw != 0) {
+  if (probeSw_EmergExtd == HIGH && probeSw != 0) {
     sendDcsBiosMessage("PROBE_SW","0");
     probeSw = 0;
   }
-  else if (probeSw_EmergExtd==HIGH && probeSw != 2) { 
+  else if (probeSw_Extend==HIGH && probeSw != 2) { 
     sendDcsBiosMessage("PROBE_SW","2");
     probeSw = 2;
   }
