@@ -44,6 +44,17 @@ uint8_t extCntTankSw;
 /* paste code snippets from the reference documentation here */
 
 //DcsBios::RotaryEncoder comIlsChannelSw("COM_ILS_CHANNEL_SW", "DEC", "INC", 6, 7);
+DcsBios::RotaryEncoder rudTrim("RUD_TRIM", "-3200", "+3200", 46, 48);
+DcsBios::RotaryEncoder comIlsChannelSw("COM_ILS_CHANNEL_SW", "DEC", "INC", 50, 52);
+DcsBios::PotentiometerEWMA<5, 128, 5> comVox("COM_VOX", A0);
+DcsBios::PotentiometerEWMA<5, 128, 5> comRwr("COM_RWR", A1);
+DcsBios::PotentiometerEWMA<5, 128, 5> comMidsB("COM_MIDS_B", A2);
+DcsBios::PotentiometerEWMA<5, 128, 5> comTacan("COM_TACAN", A3);
+DcsBios::PotentiometerEWMA<5, 128, 5> comAux("COM_AUX", A4);
+DcsBios::PotentiometerEWMA<5, 128, 5> comMidsA("COM_MIDS_A", A5);
+DcsBios::PotentiometerEWMA<5, 128, 5> comWpn("COM_WPN", A6);
+DcsBios::PotentiometerEWMA<5, 128, 5> comIcs("COM_ICS", A7);
+
 
 void setup() {
   DcsBios::setup();
@@ -95,6 +106,8 @@ void loop() {
 
   //sendDcsBiosMessage("PORT_RAD_FLAP","0");
   //sendDcsBiosMessage("COM_COMM_RELAY_SW","0");
+ 
+
   
   //+++++++++++++++++++++++++++++++++++++++++++++
   //+ Señales de la Expansion 1, direccion 0x20 +
