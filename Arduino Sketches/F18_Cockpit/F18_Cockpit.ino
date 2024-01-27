@@ -11,12 +11,16 @@
 #include "DcsBios.h"
 #include "Arduino.h"
 #include "PCF8575.h"
-
+#include <Encoder.h>
 
 
 // Set i2c address
 PCF8575 pcf8575_1(0x20);
 PCF8575 pcf8575_2(0x22);
+
+Encoder knob_RUD_TRIM(2,5);
+Encoder knob_COM_ILS_CHANNEL_SW(3,4);
+
 unsigned long timeElapsed;
 
 uint8_t comCommRelaySw;
@@ -43,9 +47,8 @@ uint8_t extCntTankSw;
 
 /* paste code snippets from the reference documentation here */
 
-//DcsBios::RotaryEncoder comIlsChannelSw("COM_ILS_CHANNEL_SW", "DEC", "INC", 6, 7);
-DcsBios::RotaryEncoder rudTrim("RUD_TRIM", "-3200", "+3200", 46, 48);
-DcsBios::RotaryEncoder comIlsChannelSw("COM_ILS_CHANNEL_SW", "DEC", "INC", 50, 52);
+DcsBios::RotaryEncoder rudTrim("RUD_TRIM", "-3200", "+3200", 2, 5);
+DcsBios::RotaryEncoder comIlsChannelSw("COM_ILS_CHANNEL_SW", "DEC", "INC", 3, 4);
 DcsBios::PotentiometerEWMA<5, 128, 5> comVox("COM_VOX", A0);
 DcsBios::PotentiometerEWMA<5, 128, 5> comRwr("COM_RWR", A1);
 DcsBios::PotentiometerEWMA<5, 128, 5> comMidsB("COM_MIDS_B", A2);
@@ -55,6 +58,15 @@ DcsBios::PotentiometerEWMA<5, 128, 5> comMidsA("COM_MIDS_A", A5);
 DcsBios::PotentiometerEWMA<5, 128, 5> comWpn("COM_WPN", A6);
 DcsBios::PotentiometerEWMA<5, 128, 5> comIcs("COM_ICS", A7);
 
+void debugMsg ( const char *sIn, int iIn )
+{
+ char sValue[7];
+ char sMsg[128];
+ snprintf(sMsg,128,"--DEBUG-> %s,",sIn);
+ utoa(iIn, sValue, 10);
+ DcsBios::tryToSendDcsBiosMessage(sMsg, sValue);
+
+}
 
 void setup() {
   DcsBios::setup();
@@ -100,14 +112,11 @@ void setup() {
   pcf8575_2.begin();
 }
 
+long position_RUD_TRIM  = -999;
+long position_COM_ILS_CHANNEL_SW = -999;
+
 void loop() {
   DcsBios::loop();
-
-
-  //sendDcsBiosMessage("PORT_RAD_FLAP","0");
-  //sendDcsBiosMessage("COM_COMM_RELAY_SW","0");
- 
-
   
   //+++++++++++++++++++++++++++++++++++++++++++++
   //+ Señales de la Expansion 1, direccion 0x20 +
