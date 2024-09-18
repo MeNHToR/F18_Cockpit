@@ -10,7 +10,7 @@
 
 #include "DcsBios.h"
 #include "Arduino.h"
-#include "PCF8575.h"
+#include "PCF8575.h" //Tested with library version 1.0.1 DO NOT UPDATE LIBRARY
 #include <Encoder.h>
 
 
